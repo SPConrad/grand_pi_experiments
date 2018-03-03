@@ -42,38 +42,35 @@ imageCount = 0
 timeToSleep = 50
 try:
     while True:
-        n = time.ctime()[11:13]+time.ctime()[14:16]
+        #n = time.ctime()[11:13]+time.ctime()[14:16]
         #s = str(n).rjust(4)
-        s = str(imageCount).rjust(4)
-        for digit in range(4):
-            for loop in range(0,7):
-                GPIO.output(segments[loop], num[s[digit]][loop])
+        #s = str(imageCount).rjust(4)
+        #for digit in range(4):
+        #    for loop in range(0,7):
+        #       GPIO.output(segments[loop], num[s[digit]][loop])
 ##                if (int(time.ctime()[18:19])%2 == 0) and (digit == 1):
 ##                    GPIO.output(25, 1)
 ##                else:
 ##                    GPIO.output(25, 0)
-            GPIO.output(digits[digit], 0)
-            time.sleep(0.001)
-            GPIO.output(digits[digit], 1)
+##            GPIO.output(digits[digit], 0)
+##            time.sleep(0.001)
+##            GPIO.output(digits[digit], 1)
     
 ##    motIO = GPIO.input(mot_sensor)
 ##    if motIO == 0:                 #When output from motion sensor is LOW
 ##        print ("No motion detected",motIO)
 ##        time.sleep(1.0)
 ##    elif motIO == 1:               #When output from motion sensor is HIGH
-##        epoch = time.time()
+        epoch = time.time()
 ##        print ("Motion detected",motIO)
-##        newfile = '/home/pi/catwatcher/image_%s.jpg' % epoch
+        newfile = '/home/pi/catwatcher/image_%s.jpg' % epoch
 ##        print (newfile)
-        #camera.capture(newfile)
-        timeToSleep = timeToSleep - 1
-        if (timeToSleep <= 0):
-            timeToSleep = 50
-            imageCount = imageCount + 1
+        camera.capture(newfile)
+        time.sleep(360)
 
-##        file = {'file': open(newfile, 'rb')}
+        file = {'file': open(newfile, 'rb')}
 
-        #r = requests.post(url, files=file)
+        r = requests.post(url, files=file)
         
         
 

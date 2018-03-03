@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+import serial
+import subprocess
+import socket
+
+# configure the serial connection
+ser = serial.Serial(port='/dev/ttyAMA0',baudrate=9600)
+host = socket.gethostname()
+ipnum = subprocess.check_output(["hostname", "-I"])
+# if there is more than one IP, just show the first one?
+
+print(ipnum)
