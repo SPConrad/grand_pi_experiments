@@ -3,13 +3,20 @@ import time
 import Adafruit_BMP.BMP085 as BMP085
 import requests
 import json
+import RPi.GPIO as GPIO
  
 # Set sensor type : Options are DHT11,DHT22 or AM2302
 sensor1=Adafruit_DHT.DHT11
-sensor2=BMP085.BMP085()
+#sensor2=BMP085.BMP085()
+
+GPIO.setmode(GPIO.BCM)
  
 # Set GPIO sensor is connected to
-gpio=26
+#soundGpio = 21
+humidGpio = 17
+
+#GPIO.setup(soundGpio, GPIO.IN)
+GPIO.setup(humidGpio, GPIO.IN)
 
 sleepTime = 10
 
@@ -18,7 +25,7 @@ url = 'http://34.232.95.23/homeauto/environment/'
 def getTemp(): 
   # Use read_retry method. This will retry up to 15 times to
   # get a sensor reading (waiting 2 seconds between each retry).
-  humidity, temperature = Adafruit_DHT.read_retry(sensor, gpio)
+  humidity, temperature = Adafruit_DHT.read_retry(sensor1, humidGpio)
    
   # Reading the DHT11 is very sensitive to timings and occasionally
   # the Pi might fail to get a valid reading. So check if readings are valid.
@@ -51,8 +58,8 @@ if __name__ == '__main__':
     try:
         while True:
             # do main loop stuff
-            #getTemp()
-            getTpas()
+            getTemp()
+            #getTpas()
             time.sleep(sleepTime)
             
             
