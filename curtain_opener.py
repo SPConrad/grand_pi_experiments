@@ -12,21 +12,14 @@ GPIO.setmode(GPIO.BCM)
 # Define GPIO signals to use
 # Physical pins 11,15,16,18
 # GPIO17,GPIO22,GPIO23,GPIO24
-StepPins1 = [12,16,20,21]
-
-StepPins2 = [6,13,19,26]
+StepPins = [6,13,19,26]
  
 # Set all pins as output
-for pin in StepPins1:
+for pin in StepPins:
   #print "Setup pins"
   GPIO.setup(pin,GPIO.OUT)
   GPIO.output(pin, False)
-  
-for pin in StepPins2:
-  #print "Setup pins"
-  GPIO.setup(pin,GPIO.OUT)
-  GPIO.output(pin, False)
-  
+ 
 # Define advanced sequence
 # as shown in manufacturers datasheet
 Seq = [[1,0,0,1],
@@ -50,15 +43,13 @@ else:
 
 #500 full steps = 1 rotation
 
-runsToDo = 250
 
-def motor(StepPins):
-  print "StepCount %i" % StepCount
+def motor():
   StepCounter = 0
   run = True
   runs = 0
   while run == True:
-    #print StepCounter,
+    print StepCounter,
     #print Seq[StepCounter]
    
     for pin in range(0,4):
@@ -76,9 +67,7 @@ def motor(StepPins):
     if (StepCounter>=StepCount):
       StepCounter = 0
       runs = runs + 1
-      print "Runs: %i" % runs
-      if runs > runsToDo:
-        return
+      print runs
     if (StepCounter<0):
       StepCounter = StepCount+StepDir
    
@@ -90,24 +79,23 @@ try:
     curtainsOpen = False
     runs = 0
     while True:
-      motorToUse = int(input("Please select a motor: "))
-      if motorToUse == 1:
-        motor(StepPins1)
+      now = datetime.now()
+      print now.hour
+      if curtainsOpen == False:
+          if now.hour >= 7 and now.hour <= 8:
+            print "it's after 7, open the blinds"
+            print "run motor"
+            curtainsOpen = True
+          else:
+            print "not time to open yet"
       else:
-        motor(StepPins2)
-      #motor(StepPins2)
-      #motor(StepPins1)
-##      if curtainsOpen == False:
-##            curtainsOpen = True
-##          else:
-##            print "not time to open yet"
-##      else:
-##          print "Afternoon, close the blinds"
-##          print "Run motor"
-##          curtainsOpen = False
-##          
-##      print "long sleep"
-##      time.sleep(3600)
+        if now.hour > 15:
+          print "Afternoon, close the blinds"
+          print "Run motor"
+          curtainsOpen = False
+          
+      print "long sleep"
+      time.sleep(3600)
         
           
       ##motor()
