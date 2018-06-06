@@ -14,11 +14,11 @@ tempGPIO = 21
 
 GPIO.setup(tempGPIO, GPIO.IN)
 
-sleepTime = 10
+sleepTime = 30
 
 url = 'http://34.232.95.23/sensors/oldbull/'
 
-def getTemp(): 
+def getTemp():
   # Use read_retry method. This will retry up to 15 times to
   # get a sensor reading (waiting 2 seconds between each retry).
   humidity, temperature = Adafruit_DHT.read_retry(sensor1, tempGPIO)
@@ -43,6 +43,7 @@ if __name__ == '__main__':
     try:
         while True:
             # do main loop stuff
+            print("Main loop")
             getTemp()
             time.sleep(sleepTime)
             

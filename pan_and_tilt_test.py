@@ -4,7 +4,7 @@ import time
 
 control = [5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10]
 
-motor1_bcm = 18
+motor1_bcm = 20
 #motor2_bcm = 19
 
 GPIO.setmode(GPIO.BCM)
@@ -19,15 +19,18 @@ m1.start(2.5)
 
 try:
     while True:
-        for x in range(11):
-            m1.ChangeDutyCycle(control[x])
-            time.sleep(0.05)
-            print x
-
-        for x in range (9, 0, -1):
-            m1.ChangeDutyCycle(control[x])
-            time.sleep(0.05)
-            print x
+        target = float(input("Please select target: "))
+        m1.ChangeDutyCycle(target)
+        time.sleep(1)
+##        for x in range(11):
+##            m1.ChangeDutyCycle(control[x])
+##            time.sleep(0.05)
+##            print x
+##
+##        for x in range (9, 0, -1):
+##            m1.ChangeDutyCycle(control[x])
+##            time.sleep(0.05)
+##            print x
 
 except KeyboardInterrupt:
     GPIO.cleanup()
