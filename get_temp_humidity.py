@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO
 sensor1=Adafruit_DHT.DHT11
 
 GPIO.setmode(GPIO.BCM)
- 
+sensor_id = "0"
 tempGPIO = 21
 
 GPIO.setup(tempGPIO, GPIO.IN)
@@ -30,7 +30,7 @@ def getTemp():
     data = {}
     data['temp'] = temperature
     data['humidity'] = humidity
-    data['sensorId'] = 0
+    data['sensorId'] = sensor_id
     json_package = json.dumps(data)
     print json_package
     r = requests.post(url, json=json_package)
