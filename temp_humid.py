@@ -16,7 +16,7 @@ sensorPin = 18
 
 GPIO.setup(sensorPin, GPIO.IN)
 
-sleepTime = 10
+sleepTime = 1800
 
 url = 'http://spconrad.com/newreading/'
 def getTemp(): 
